@@ -3,91 +3,86 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Mi Web Online</title>
+  <title>Parallax Template - Materialize</title>
 
   <!-- CSS  -->
-   <link href="css/icon.css" rel="stylesheet"> 
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-<div id="board" class="container-row">
 
 
-</div>
+  <nav>
+    <div class="nav-wrapper indigo">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- contenido -->
+  <div class="container">
+    <h1 id="titulo">Todo list</h1>
+    <input id="input" type="text">
+    <!-- <button onclick="desdehtml()" id="btnAgregar">Agregar</button>
+    <button id="btnJS1">desde javascript1</button>
+    <button id="btnJS2">desde javascript2</button> -->
+    <button onclick="agregar()" id="agregar">Agregar</button>
+    <input id="inputSelected" type="text">
+    <button onclick="borrar(document.getElementById('borrarSelected').value)" id="borrarSelected">Borrar Elemento</button>
 
+    <ul id="board" class="collection">
+
+    </ul>
+  </div>
 
 <!--  Scripts-->
 <script src="js/jquery.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 <script>
+  var cont = 0;
 
-class Person{
-  constructor(id, nombre, lastName, picture){
-    this.id=id;
-    this.name = nombre;
-    this.lastName=lastName;
-    this.picture=picture;
+  agregar = () =>{
+    var  input = document.getElementById('input');
+    var board = document.getElementById('board');
+    board.innerHTML += `<li id='el${cont}' class="collection-item">
+      ${cont+" "+input.value} <button onclick="borrar('el${cont}')">
+        Borrar</button></li>
+      `;
+    input.value = "";
+    cont++;
   }
-  show(){
-    console.log(`id: ${this.id} 
-      nombre: ${this.name}
-      apellido: ${this.lastName}
-      foto: ${this.picture}`);
 
+  /*var button = document.getElementById('agregar');
+  button.onclick = agregar;*/
+  
+  borrar = (id) =>{
+    var element = document.getElementById(id);
+    element.outerHTML = "";
   }
-  getCard(){
-     let html = `<div class="col s12 m6 card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="${this.picture}">
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">${this.name}<i class="material-icons right">more_vert</i></span>
-      <p><a href="#">${this.lastName}</a></p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-  </div>`;
-  return html;
-    
+
+
+
+
   
-  }
-  
-}
-
-var getData =(url)=>{
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("get", url);
-    xhr.onload = () => resolve(xhr.responseText);
-    xhr.onerror = () => reject(xhr.statusText);
-    xhr.send();
-  });
-};
-url= "https://reqres.in/api/users?page=1";
-
-getData(url).then((data)=>{
-  var info = JSON.parse(data);
-    for (let item of info.data) {
-      let person = new Person(item.id, item.first_name, item.last_name, item.avatar);
-      document.getElementById('board').innerHTML+=
-      
-      person.getCard();
-      
-      
-    }
-}).catch((error)=>{
-  console.log(error);
-  
-
-});
-
-
-
+  // var desdehtml = () =>{
+  //   console.log('evento desde html');
+  // }
+  // var desdeJS1 = () => {
+  //   console.log('desde JS 1');
+  // } 
+  // var desdeJS2 = () => {
+  //   console.log('desde JS 2');
+  // }
+  // var btnJS1 = document.getElementById('btnJS1'); 
+  // btnJS1.onclick = desdeJS1;
+  // var btnJS2 = document.getElementById('btnJS2');
+  // btnJS2.addEventListener('click',desdeJS2);
 </script>
   </body>
 </html>
